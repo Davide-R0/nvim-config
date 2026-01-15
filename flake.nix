@@ -100,7 +100,11 @@
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = {
         gitPlugins = with pkgs.neovimPlugins; [ ];
-        general = with pkgs.vimPlugins; [ ];
+        general = with pkgs.vimPlugins; [
+          # Aggiungere qui i plugin
+          lualine-nvim    # lualine
+          nvim-web-devicons # Spesso richiesto da lualine per le icone
+        ];
       };
 
       # not loaded automatically at startup.
@@ -173,7 +177,7 @@
           wrapRc = true;
           # IMPORTANT:
           # your alias may not conflict with your other packages.
-          aliases = [ "vim" ];
+          #aliases = [ "vim" ];
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
         };
         # and a set of categories that you want
