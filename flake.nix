@@ -21,6 +21,7 @@
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
 
   inputs = {
+        
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # neovim-nightly-overlay = {
@@ -105,53 +106,88 @@
       # this section is for dependencies that should be available
       # at RUN TIME for plugins. Will be available to PATH within neovim terminal
       # this includes LSPs
-      lspsAndRuntimeDeps = {
-        general = with pkgs; [
-          ## Tool essenziali per Telescope e Neovim
-          #ripgrep
-          #fd
-          #
-          ## LSP Servers (coerenti con la tua config lua)
-          #lua-language-server
-          #nixd  # O nil, per Nix
-          #stylua # Formatter per Lua
-          #
-          ## C compiler per compilare treesitter parsers se necessario
-          #gcc
+      lspsAndRuntimeDeps = with pkgs; {
+        general = [
+          universal-ctags # ???
+          
+                    # For telescope?
+          ripgrep
+          fd
+          #stdenv.cc.cc
+          nix-doc
+                    # language servers
+          lua-language-server
+          tree-sitter
+          #nixd
+          #stylua
+          #gcc #??
+        ];
+        kickstart-debug = [
+                    #delve #?
+        ];
+        kickstart-lint = [
+                    #markdownlint-cli  #?
         ];
       };
 
       # This is for plugins that will load at startup without using packadd:
-      startupPlugins = {
-        debug = with pkgs.vimPlugins; [
-        ];
-        gitPlugins = with pkgs.neovimPlugins; [
-          #gitsigns-nvim 
-          #vim-fugitive
-        ];
-        general = with pkgs.vimPlugins; [
-          #pkgs.neovimPlugins.lazy-nvim
-          lazy-nvim
-          # Aggiungere qui i plugin
-          lualine-nvim    # lualine
-          nvim-web-devicons # Spesso richiesto da lualine per le icone
+      startupPlugins =  with pkgs.vimPlugins; {
+        general = [
+          base16-nvim # for dms automatic color creation
 
-          oil-nvim
+          lazy-nvim
+
+          # General
+          lualine-nvim # Lualine
+            vim-startify # Startup page
+          oil-nvim # Filemanager
+          fidget-nvim # Notifications
+          todo-comments-nvim # Todo comments
+                    
+
+          nvim-web-devicons # For special icons (Lualine, Telescope, Oil, ...)
+          
+                    # Telescope
+            telescope-nvim
+          telescope-fzf-native-nvim
+          telescope-ui-select-nvim
+          plenary-nvim
+
+                    # Lsp
+          nvim-lspconfig
+
+                    # Autocomplition
+                              nvim-cmp
+          luasnip
+          cmp_luasnip
+          cmp-nvim-lsp
+          cmp-path
+
+
 	      # Treesitter
-          (nvim-treesitter.withPlugins (plugins: with plugins; [
-            nix
-            lua
-            python
-            javascript
-            markdown
-            markdown_inline
-            bash
-            vim
-            vimdoc
-            query
-            c
-          ]))
-      ];
+          nvim-treesitter.withAllGrammars
+                    #(nvim-treesitter.withPlugins (plugins: with plugins; [
+                    #  nix
+                    #  lua
+                    #  python
+                    #  javascript
+                    #  markdown
+                    #  markdown_inline
+                    #  bash
+                    #  vim
+                    #  vimdoc
+                    #  query
+                    #  c
+                    #  cpp
+                    #  rust
+                    #]))
+        ];
+        debug = [
+        ];
+        gitPlugins = [
+          gitsigns-nvim 
+                    #vim-fugitive
+        ];
       };
 
       # not loaded automatically at startup.

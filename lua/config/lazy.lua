@@ -26,11 +26,31 @@ vim.g.have_nerd_font = nixCats('have_nerd_font')
 
 -- Configurazione e installazione dei plugin TRAMITE IL WRAPPER NIXCATS.
 -- Ora che il flake.nix è corretto, questo funzionerà come previsto.
+local specs = {
+    { import = 'plugins', exclude = 'dankcolors' },
+}
+
+-- Carica dinamicamente il tema dankcolors dalla directory di configurazione.
+-- Questo permette al tema di essere aggiornato da tool esterni (es. mautagen)
+-- a runtime, senza dover rebuildare la configurazione Nix.
+local dankcolors_path = vim.fn.stdpath('config') .. '/lua/plugins/dankcolors.lua'
+local f = io.open(dankcolors_path, "r")
+if f ~= nil then
+    f:close()
+    -- pcall per eseguire il file in modo sicuro
+    local ok, res = pcall(dofile, dankcolors_path)
+    if ok and type(res) == "table" then
+        -- dankcolors.lua restituisce una lista di specifiche di plugin
+        for _, spec in ipairs(res) do
+            table.insert(specs, spec)
+        end
+    elseif not ok then
+        vim.notify("Errore nel caricare " .. dankcolors_path .. ": " .. tostring(res), vim.log.levels.ERROR)
+    end
+end
+
 require('nixCatsUtils.lazyCat').setup(
   nixCats.pawsible { 'allPlugins', 'start', 'lazy.nvim' }, -- Trova lazy.nvim da Nix
-  {
-    -- Importa tutto ciò che si trova in lua/plugins/*.lua come una lista di specifiche
-    { import = 'plugins' },
-  },
+  specs,
   lazyOptions
 )

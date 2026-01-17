@@ -1,8 +1,4 @@
 return {
-
-}
-
--- return {
 --     'package/name',
 --     
 --     enabled = true, -- If the package is enabled
@@ -26,4 +22,4 @@ return {
 -- 
 --         })
 --     end,
--- }
+}
