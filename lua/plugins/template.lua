@@ -1,25 +1,25 @@
 return {
---     'package/name',
---     
---     enabled = true, -- If the package is enabled
---     
---     lazy = false, -- false = the plugin is loaded at startup | true = the plugin is loaded when needed
---     
---     vent = { "BufReadPost", "BufNewFile" }, -- Carica solo all'apertura di un file
---     
---     -- Keys to load and execute the plugin
---     keys = { 
---        { "<leader>p", "<cmd>PluginCommand<cr>", desc = "Descrizione" },
---     },
---
---     dependencies = { ... }, 
---     
---     config = function()
---         
---         -- Other eventuals functions...
---         
---         require('name').setup({
--- 
---         })
---     end,
-}
+  --     'package/name',
+  --     
+  --     enabled = true, -- If the package is enabled
+  --     
+  --     lazy = false, -- false = the plugin is loaded at startup | true = the plugin is loaded when needed
+  --     
+  --     vent = { "BufReadPost", "BufNewFile" }, -- Carica solo all'apertura di un file
+  --     
+  --     -- Keys to load and execute the plugin
+  --     keys = { 
+    --        { "<leader>p", "<cmd>PluginCommand<cr>", desc = "Descrizione" },
+    --     },
+    --
+    --     dependencies = { ... }, 
+    --     
+    --     config = function()
+      --         
+      --         -- Other eventuals functions...
+      --         
+      --         require('name').setup({
+        -- 
+        --         })
+        --     end,
+      }

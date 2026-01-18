@@ -45,7 +45,7 @@ vim.api.nvim_create_user_command(
       vim.notify("Errore: Salva il file prima di stamparlo.", vim.log.levels.ERROR)
       return
     end
-    
+
     -- Salva il file
     vim.cmd('write')
 
@@ -69,9 +69,9 @@ vim.api.nvim_create_user_command(
     -- Esegui il comando e controlla se ci sono stati errori
     local result = vim.fn.system(print_command)
     if vim.v.shell_error ~= 0 then
-        vim.notify("Errore durante la stampa: " .. result, vim.log.levels.ERROR)
+      vim.notify("Errore durante la stampa: " .. result, vim.log.levels.ERROR)
     else
-        vim.notify("File inviato alla stampante: " .. vim.fn.fnamemodify(filename, ':t'))
+      vim.notify("File inviato alla stampante: " .. vim.fn.fnamemodify(filename, ':t'))
     end
   end,
   {

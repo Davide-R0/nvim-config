@@ -1,5 +1,5 @@
 require('nixCatsUtils').setup {
-    non_nix_value = true,
+  non_nix_value = true,
 }
 
 require('config.lazy')

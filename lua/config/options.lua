@@ -25,7 +25,7 @@ set.tabstop = 4
 set.shiftwidth = 4
 set.softtabstop = 4
 set.expandtab = true  --per avere solo spazi e non tab
-    
+
 -- Reload files changed outside nvim
 set.autoread = true
 
@@ -96,3 +96,23 @@ let term_program=$TERM_PROGRAM
 vim.cmd[[ 
 autocmd! BufNewFile,BufRead *.vs,*.fs,*.cp,*.vert,*.frag,*.comp set ft=glsl
 ]]
+
+-- Tab space for some files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "nix", "lua", "json", "jsonc", "yaml", "html", "css", "scss", "javascript", "typescript", "javascriptreact", "typescriptreact", "ruby" },
+  callback = function(args)
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+    -- Fix specifico per Nix (e altri linguaggi che usano # per i commenti)
+    if args.match == "nix" or args.match == "ruby" or args.match == "python" then
+      -- Disabilita smartindent (è spesso lui che spara il # a inizio riga)
+      vim.opt_local.smartindent = false
+      -- Rimuove la regola 0# da indentkeys (se presente)
+      vim.opt_local.indentkeys:remove("0#")
+      -- Rimuove la regola 0# da cinkeys (spesso usata come fallback)
+      vim.opt_local.cinkeys:remove("0#")
+    end
+  end,
+})
