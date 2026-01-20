@@ -3,6 +3,16 @@
 This repository contains a reproducible Neovim configuration built using **nixCats-nvim** and **lazy.nvim**. It is designed to be consumed as a Flake input by a NixOS system, but can also be tested and built locally.
 
 ---
+# Per testare in dev:
+
+Usare `nix run .` o `nix build .` per testarlo.
+
+Quando fai `nix run .`, Nix scarica i pacchetti nel `/nix/store`. Non "sporcano" il tuo sistema operativo (non vanno in /usr/bin).
+
+Per pulire da questi pacchetti scaricati: mettere `nix-collect-garbadge` nella cartella di config di nvim e poi se si vuole eliminare la cartella `result/`
+
+
+---
 
 ## 🔄 The Development Workflow
 

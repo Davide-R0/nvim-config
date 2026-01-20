@@ -11,13 +11,26 @@ local lazyOptions = {
   lockfile = getlockfilepath(),
   ui = {
     icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘', config = '🛠', event = '📅', ft = '📂', init = '⚙', keys = '🗝', plugin = '🔌', 
+      cmd = '⌘', config = '🛠', event = '📅', ft = '📂', init = '⚙', keys = '🗝', plugin = '🔌',
       runtime = '💻', require = '🌙', source = '📄', start = '🚀', task = '📌', lazy = '💤 ',
     },
+    border = "rounded",
+    size = { width = 0.6, height = 0.6 },
+  },
+  checker = { enabled = false, notify = false },
+  change_detection = { enabled = false, notify = false },
+  pkg = { enabled = false },
+  rocks = { enabled = false },
+  performance = { rtp = { reset = false } },
+  readme = {
+    enabled = false,
+    root = vim.fn.stdpath("state") .. "/lazy/readme",
+    files = { "README.md", "lua/**/README.md" },
+    skip_if_doc_exists = true,
   },
 }
 
--- 2. Imposta la Leader Key prima di caricare lazy
+-- 2. Imposta la Leadsr Key prima di caricare lazy
 vim.g.mapleader = '\\'
 vim.g.maplocalleader = '\\'
 

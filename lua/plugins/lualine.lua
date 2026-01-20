@@ -1,14 +1,13 @@
 return {
   'nvim-lualine/lualine.nvim',
 
-  enabled = true, --se il plugin è gestito da nix lazy non deve scaricarlo
+  enabled = true,
 
-  dependencies ={ 'nvim-tree/nvim-web-devicons', name = 'nvim-web-devicons', enabled = vim.g.have_nerd_font },
-  --dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 'nvim-tree/nvim-web-devicons', name = 'nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
   build = require('nixCatsUtils').lazyAdd ':TSUpdate',
 
-  lazy = false, -- false = the plugin is loaded at startup | true = the plugin is loaded when needed
+  lazy = false,
 
   config = function()
     local auto_theme = require('lualine.themes.auto')
@@ -29,21 +28,18 @@ return {
         section_separators = { left = '', right = '' },
       },
       sections = {
-        lualine_a = { 
+        lualine_a = {
           { 'mode', right_padding = 2 },
-
         },
-        lualine_b = { 
-          'filename', 
-          'branch', 
-          'diff', 
+        lualine_b = {
+          'filename',
+          'branch',
+          'diff',
           'diagnostics',
         },
         lualine_c = {
-
           {'filename', path = 1},
           '%=', --[[ add your center compoentnts here in place of this comment ]]
-
         },
         lualine_y = { 'progress',  },
         lualine_z = { { 'location', left_padding = 2 }, },

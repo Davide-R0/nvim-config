@@ -5,8 +5,7 @@ return {
 
   lazy = false, -- false = the plugin is loaded at startup | true = the plugin is loaded when needed
 
-  dependencies = { { "nvim-tree/nvim-web-devicons", name = "nvim-web-devicons" } }, -- use if you prefer nvim-web-devicons
-
+  dependencies = { 'nvim-tree/nvim-web-devicons', name = 'nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
   config = function()
     require('oil').setup({
@@ -187,6 +186,6 @@ return {
       })
 
       vim.keymap.set("n", "-", "<cmd>lua require('oil').open_float()<cr>", { desc = "Open Oil float" })
-      vim.keymap.set("n", ".", "<cmd>lua require('oil').open()<cr>", { desc = "Open Oil" })
+      --vim.keymap.set("n", ".", "<cmd>lua require('oil').open()<cr>", { desc = "Open Oil" })
     end,
   }

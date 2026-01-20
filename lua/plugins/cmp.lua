@@ -2,7 +2,7 @@ return {
   -- Autocompletion
   'hrsh7th/nvim-cmp',
 
-  event = 'InsertEnter',
+  event = {'InsertEnter', 'CmdlineEnter' }, -- load even when enter in comand line
 
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
@@ -39,6 +39,8 @@ return {
         --  into multiple repos for maintenance purposes.
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
+        'hrsh7th/cmp-buffer',   -- Per completamento parole nel buffer
+        'hrsh7th/cmp-cmdline',  -- Per completamento nella riga di comando (:, /)
       },
       config = function()
         -- See `:help cmp`
@@ -46,71 +48,181 @@ return {
         local luasnip = require 'luasnip'
         luasnip.config.setup {}
 
+        -- DEFINIZIONE COLORI (Opzionale, per assicurare che il winhighlight funzioni)
+        -- vim.api.nvim_set_hl(0, 'CmpNormal', { link = 'Normal' })
+        -- vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'Normal' })
+
+        local kind_icons = {
+          Text = '',
+          Method = '󰆧',
+          Function = '󰊕',
+          Constructor = '',
+          Field = '󰇽',
+          Variable = '󰂡',
+          Class = '󰠱',
+          Interface = '',
+          Module = '',
+          Property = '󰜢',
+          Unit = '',
+          Value = '󰎠',
+          Enum = '',
+          Keyword = '󰌋',
+          Snippet = '',
+          Color = '󰏘',
+          File = '󰈙',
+          Reference = '',
+          Folder = '󰉋',
+          EnumMember = '',
+          Constant = '󰏿',
+          Struct = '',
+          Event = '',
+          Operator = '󰆕',
+          TypeParameter = '󰅲',
+          -- Aggiunta per AI
+          CMPAI = '🤖',
+        }
+
+        -- FUNZIONE DI FORMATTAZIONE (Grafica menu)
+        local format_func = function(entry, vim_item)
+          -- A. Gestione Icone Base
+          if kind_icons[vim_item.kind] then
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+          end
+
+          -- B. Etichetta Sorgente (Menu a destra)
+          vim_item.menu = ({
+            nvim_lsp = '[LSP]',
+            cmp_ai = '[AI]',
+            luasnip = '[Snip]',
+            buffer = '[Buf]',
+            path = '[Path]',
+            cmdline = '', -- Lasciamo vuoto in cmdline per pulizia
+          })[entry.source.name]
+
+          -- C. LOGICA SPECIALE PER CMDLINE 
+          -- Se siamo in cmdline (:) o path, rimuoviamo il "Kind" (es. Variable)
+          if entry.source.name == 'cmdline' or entry.source.name == 'path' then
+            vim_item.kind = '' -- Rimuove testo e icona
+            -- Se vuoi SOLO l'icona ma non il testo 'Variable', usa:
+            -- vim_item.kind = kind_icons[vim_item.kind] or ''
+          end
+
+          return vim_item
+        end
+
+        -- MAPPING COMUNI (Definiti qui per usarli ovunque)
+        local function get_mappings(is_cmdline)
+          return {
+            -- Navigazione Giù (Ctrl-n o Ctrl-j)
+            ['<C-n>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then cmp.select_next_item() else fallback() end
+            end, { 'i', 'c', 's' }),
+            ['<C-j>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then cmp.select_next_item() else fallback() end
+            end, { 'i', 'c', 's' }),
+
+            -- Navigazione Su (Ctrl-p o Ctrl-k)
+            ['<C-p>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then cmp.select_prev_item() else fallback() end
+            end, { 'i', 'c', 's' }),
+            ['<C-k>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then cmp.select_prev_item() else fallback() end
+            end, { 'i', 'c', 's' }),
+
+            -- Scroll Docs
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+            -- Conferma
+            ['<C-y>'] = cmp.mapping.confirm { select = true },
+            ['<CR>'] = cmp.mapping.confirm { select = false }, -- Enter conferma solo se selezionato esplicitamente
+
+            -- Trigger manuale
+            ['<C-Space>'] = cmp.mapping.complete {},
+
+            -- Annulla
+            ['<C-e>'] = cmp.mapping.abort(),
+
+            -- Snippet Jump (solo insert)
+            ['<C-l>'] = cmp.mapping(function()
+              if luasnip.expand_or_locally_jumpable() then luasnip.expand_or_jump() end
+            end, { 'i', 's' }),
+            ['<C-h>'] = cmp.mapping(function()
+              if luasnip.locally_jumpable(-1) then luasnip.jump(-1) end
+            end, { 'i', 's' }),
+          }
+        end
+
         cmp.setup {
           snippet = {
             expand = function(args)
               luasnip.lsp_expand(args.body)
             end,
           },
-          completion = { completeopt = 'menu,menuone,noinsert' },
+          --completion = { completeopt = 'menu,menuone,noinsert' },
 
-          -- For an understanding of why these mappings were
-          -- chosen, you will need to read `:help ins-completion`
-          --
-          -- No, but seriously. Please read `:help ins-completion`, it is really good!
-          mapping = cmp.mapping.preset.insert {
-            -- Select the [n]ext item
-            ['<C-n>'] = cmp.mapping.select_next_item(),
-            -- Select the [p]revious item
-            ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-            -- Scroll the documentation window [b]ack / [f]orward
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
-            -- Accept ([y]es) the completion.
-            --  This will auto-import if your LSP supports it.
-            --  This will expand snippets if the LSP sent a snippet.
-            ['<C-y>'] = cmp.mapping.confirm { select = true },
-
-            -- If you prefer more traditional completion keymaps,
-            -- you can uncomment the following lines
-            --['<CR>'] = cmp.mapping.confirm { select = true },
-            --['<Tab>'] = cmp.mapping.select_next_item(),
-            --['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-            -- Manually trigger a completion from nvim-cmp.
-            --  Generally you don't need this, because nvim-cmp will display
-            --  completions whenever it has completion options available.
-            ['<C-Space>'] = cmp.mapping.complete {},
-
-            -- Think of <c-l> as moving to the right of your snippet expansion.
-            --  So if you have a snippet that's like:
-            --  function $name($args)
-            --    $body
-            --  end
-            --
-            -- <c-l> will move you to the right of each of the expansion locations.
-            -- <c-h> is similar, except moving you backwards.
-            ['<C-l>'] = cmp.mapping(function()
-              if luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
-              end
-            end, { 'i', 's' }),
-            ['<C-h>'] = cmp.mapping(function()
-              if luasnip.locally_jumpable(-1) then
-                luasnip.jump(-1)
-              end
-            end, { 'i', 's' }),
-
-            -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-            --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+          -- GRAFICA FINESTRE (Bordi arrotondati)
+          window = {
+            completion = {
+              border = 'rounded',
+              scrollbar = true,
+              winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+            },
+            documentation = {
+              border = 'rounded',
+              winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+            }
           },
-          sources = {
-            { name = 'nvim_lsp' },
+
+          -- MAPPINGS GENERALI
+          mapping = cmp.mapping.preset.insert(get_mappings(false)),
+
+          -- SORGENTI
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp',
+              option = {
+                markdown_oxide = {
+                  keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+                }
+              }
+            },
             { name = 'luasnip' },
+            { name = 'render-markdown' }, -- Assicurati di avere il plugin installato
             { name = 'path' },
+          }, {
+            { name = 'buffer', keyword_length = 5 },
+          }),
+
+          -- FORMATTAZIONE VISIVA
+          formatting = {
+            fields = { 'kind', 'abbr', 'menu' },
+            format = format_func,
           },
         }
+
+        -- CONFIGURAZIONE CMDLINE (Ricerca / e ?)
+        cmp.setup.cmdline({ '/', '?' }, {
+          mapping = cmp.mapping.preset.cmdline(get_mappings(true)),
+          sources = { { name = 'buffer' } },
+          formatting = {
+            fields = { 'abbr' },
+          }
+        })
+
+        cmp.setup.cmdline(':', {
+          mapping = cmp.mapping.preset.cmdline(get_mappings(true)),
+          sources = cmp.config.sources({
+            { name = 'path' }
+          }, {
+            { name = 'cmdline' }
+          }),
+          formatting = {
+            fields = { 'abbr', 'kind' },
+            format = format_func
+          },
+          matching = { disallow_symbol_nonprefix_matching = false }
+        })
       end,
     }

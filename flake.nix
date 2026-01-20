@@ -21,7 +21,6 @@
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
 
   inputs = {
-
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
@@ -30,14 +29,6 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # neovim-nightly-overlay = {
-      #   url = "github:nix-community/neovim-nightly-overlay";
-      # };
-
-    #plugins-lazy-nvim = {
-      #    url = "github:folke/lazy.nvim";
-      #    flake = false;
-      #};
 
     #????
     #plugins-treesitter-textobjects = {
@@ -111,39 +102,74 @@
     # provide when you build the package using this builder function.
     # see :help nixCats.flake.outputs.packageDefinitions for info on that section.
 
-    # lspsAndRuntimeDeps:
-    # this section is for dependencies that should be available
-    # at RUN TIME for plugins. Will be available to PATH within neovim terminal
-    # this includes LSPs
     lspsAndRuntimeDeps = with pkgs; {
       general = [
-        universal-ctags # ???
+        tree-sitter
+        tree-sitter-grammars.tree-sitter-markdown-inline
+        
+        # ====================
+        # LSP
+        # ====================
+        # Lua & Nix
+        lua-language-server
+        nixd
+        # C / C++
+        clang-tools
+        cmake-language-server
+        # Rust overlay
+        (rust-bin.stable.latest.default.override { extensions = [ "rust-src" "rust-analyzer" ]; })
+        # Web (HTML/CSS/JS/TS)
+        vscode-langservers-extracted # Fornisce html, css, json
+        typescript-language-server
+        nodePackages.bash-language-server
+        # Python
+        pyright
+        # Latex 
+        texlab
+        texlivePackages.latexindent
+        # Markdown
+        markdown-oxide
+        # Openscad
+        openscad-lsp
+        # Hardware / Low level
+        arduino-language-server
+        asm-lsp
+        # toml files
+        taplo
 
-          # For telescope?
-          ripgrep
-          fd
+        # For telescope
+        ripgrep
+        fd
+        
+        # For git
+        git
+        lazygit
 
-          # For images, pdf, videos, ecc...
-          chafa
-          ueberzugpp       # NECESSARIO per vedere le immagini
-          ffmpegthumbnailer # Opzionale per video
-          poppler-utils     # Opzionale per PDF
-          imagemagick # Optional, for svg
+        # Lean # NOTE: After the first installation: `elan default stable`
+        elan
 
-          #stdenv.cc.cc
-          nix-doc
-          # language servers
-          lua-language-server
-          tree-sitter
-          #nixd
-          #stylua
+        # For images, pdf, videos, ecc...
+        chafa
+        ueberzugpp
+        imagemagick
+        ffmpegthumbnailer # Opzionale per video
+        poppler-utils     # Opzionale per PDF
 
-          # Rust overlay
-          (rust-bin.stable.latest.default.override { extensions = [ "rust-src" "rust-analyzer" ]; })
+        # For startup page
+        fortune
+        cowsay
+        
+        # General
+        wget
+        curl
+        gnumake
+        gcc
 
-          # Needed for other lsp
-          gcc
-        ];
+        # AI
+        #ollama-cuda
+        #ollama-vulkan
+        #ollama-rocm
+      ];
       kickstart-debug = [
         #delve #?
       ];
@@ -155,56 +181,71 @@
     # This is for plugins that will load at startup without using packadd:
     startupPlugins =  with pkgs.vimPlugins; {
       general = [
-# for dms automatic color creation
+        # for dms automatic color creation
         base16-nvim 
-          lazy-nvim
+        # Pakage manager
+        lazy-nvim
 
-          # General
-          lualine-nvim # Lualine
-          startup-nvim # Startup page
-          oil-nvim # Filemanager
-          fidget-nvim # Notifications
-          lazydev-nvim # lua lsp for nvim configurations
-          todo-comments-nvim # Todo comments
-          nvim-spectre # for searching in multiple files
-          popup-nvim # for extra window managment
-          undotree # undotree
+        # General
+        lualine-nvim # Lualine
+        alpha-nvim # Startup page
+        oil-nvim # Filemanager
+        fidget-nvim # Notifications
+        lazydev-nvim # lua lsp for nvim configurations
+        todo-comments-nvim # Todo comments
+        nvim-spectre # for searching in multiple files
+        popup-nvim # for extra window managment
+        undotree # undotree
+        image-nvim # Images
+        nvim-web-devicons # For special icons (Lualine, Telescope, Oil, ...)
+        
+        # AI
+        codecompanion-nvim
 
-          # Git
-          blamer-nvim
+        # Git
+        lazygit-nvim # TODO: da mettere in gitPlugins ?
+        diffview-nvim
+        vim-fugitive # NOTE: da togliere?
+        gitsigns-nvim
 
-          nvim-web-devicons # For special icons (Lualine, Telescope, Oil, ...)
+        # Lean
+        lean-nvim
+        
+        # For rust Cargo.toml files
+        crates-nvim
 
-          # Telescope
-          telescope-nvim
-          telescope-fzf-native-nvim
-          telescope-ui-select-nvim
-          telescope-file-browser-nvim
-          telescope-media-files-nvim
-          plenary-nvim
+        # Telescope
+        telescope-nvim
+        telescope-fzf-native-nvim
+        telescope-ui-select-nvim
+        telescope-file-browser-nvim
+        telescope-media-files-nvim
+        plenary-nvim
 
-          # Lsp
-          nvim-lspconfig
+        # Lsp
+        nvim-lspconfig
 
-          # Autocomplition
-          nvim-cmp
-          cmp_luasnip
-          cmp-nvim-lsp
-          cmp-path
-          cmp-buffer # TODO: add to the lua config
-          cmp-cmdline # TODO: add to the lua config
-          luasnip
-          #friendly-snippets
+        # Autocomplition
+        nvim-cmp
+        cmp_luasnip
+        cmp-nvim-lsp
+        cmp-path
+        cmp-buffer
+        cmp-cmdline
+        luasnip
+        friendly-snippets
 
-          # Treesitter
-          nvim-treesitter.withAllGrammars
-          #(nvim-treesitter.withPlugins (plugins: with plugins; [ nix lua python javascript markdown markdown_inline bash vim vimdoc query c cpp rust ]))
+        # Markdown
+        render-markdown-nvim
+        nvim-treesitter-parsers.markdown_inline
+
+        # Treesitter
+        nvim-treesitter.withAllGrammars
+        #(nvim-treesitter.withPlugins (plugins: with plugins; [ nix lua python javascript markdown markdown_inline bash vim vimdoc query c cpp rust ]))
       ];
       debug = [
       ];
       gitPlugins = [
-        gitsigns-nvim 
-          #vim-fugitive
       ];
     };
 
@@ -303,8 +344,6 @@
   # to the name of the packageDefinitions entry you wish to use as the default.
   defaultPackageName = "nvim";
   in
-
-
     # see :help nixCats.flake.outputs.exports
     forEachSystem (system: let
         nixCatsBuilder = utils.baseBuilder luaPath {
@@ -349,7 +388,6 @@
       categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
   };
   in {
-
     # these outputs will be NOT wrapped with ${system}
 
     # this will make an overlay out of each of the packageDefinitions defined above
