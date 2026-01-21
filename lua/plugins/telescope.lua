@@ -35,6 +35,9 @@ return {
     -- Media Files (Immagini/PDF)
     { 'nvim-telescope/telescope-media-files.nvim' },
 
+    -- manix search
+    'mrcjkb/telescope-manix',
+
     -- For undo
     -- { 'debugloop/telescope-undo.nvim' },
   },
@@ -80,11 +83,14 @@ return {
     pcall(telescope.load_extension, 'fzf')
     pcall(telescope.load_extension, 'ui-select')
     pcall(telescope.load_extension, 'media_files')
+    pcall(telescope.load_extension, 'manix')
     -- pcall(telescope.load_extension, 'undo')
 
     -- ==========================================
     -- KEYBINDINGS
     -- ==========================================
+    vim.keymap.set('n', '<leader>nm', function() telescope.extensions.manix.manix() end, { desc = '[N]ix [M]anix Options' })
+
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

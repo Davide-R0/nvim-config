@@ -57,7 +57,7 @@ if f ~= nil then
     for _, spec in ipairs(res) do
       table.insert(specs, spec)
     end
-  elseif not ok then
+   elseif not ok then
     vim.notify("Errore nel caricare " .. dankcolors_path .. ": " .. tostring(res), vim.log.levels.ERROR)
   end
 end
@@ -67,3 +67,4 @@ require('nixCatsUtils.lazyCat').setup(
   specs,
   lazyOptions
 )
+

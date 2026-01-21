@@ -107,6 +107,14 @@
         tree-sitter
         tree-sitter-grammars.tree-sitter-markdown-inline
         
+        # manual for nix options
+        manix
+        
+        # For latex
+        #texlive.combined.scheme-full # O scheme-medium (Il compilatore LaTeX)
+        zathura                      # Il visualizzatore PDF
+        xdotool                      # FONDAMENTALE: serve a VimTeX per comunicare con Zathura
+
         # ====================
         # LSP
         # ====================
@@ -221,6 +229,7 @@
         telescope-file-browser-nvim
         telescope-media-files-nvim
         plenary-nvim
+        telescope-manix
 
         # Lsp
         nvim-lspconfig
@@ -238,6 +247,9 @@
         # Markdown
         render-markdown-nvim
         nvim-treesitter-parsers.markdown_inline
+
+        # Latex watching
+        vimtex
 
         # Treesitter
         nvim-treesitter.withAllGrammars
