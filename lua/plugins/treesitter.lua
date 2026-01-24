@@ -1,9 +1,14 @@
 return {
-    { -- Highlight, edit, and navigate code
+  {
     'nvim-treesitter/nvim-treesitter',
+
     build = require('nixCatsUtils').lazyAdd ':TSUpdate',
     branch = 'main',
+
     lazy = false,
+
+    --event = "VimEnter",
+
     config = function(_, opts)
       ---@param buf integer
       ---@param language string
@@ -45,10 +50,9 @@ return {
             end
           end
         end,
-      })
-    end,
-  },
-}
+      })      end,
+    }
+  }
 --    {
 --      "nvim-treesitter/nvim-treesitter-textobjects",
 --      lazy = false,

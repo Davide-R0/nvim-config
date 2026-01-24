@@ -10,7 +10,23 @@ Usare `nix run .` o `nix build .` per testarlo.
 
 Quando fai `nix run .`, Nix scarica i pacchetti nel `/nix/store`. Non "sporcano" il tuo sistema operativo (non vanno in /usr/bin).
 
-Per pulire da questi pacchetti scaricati: mettere `nix-collect-garbadge` nella cartella di config di nvim e poi se si vuole eliminare la cartella `result/`
+Per pulire da questi pacchetti scaricati: mettere `nix-collect-garbadge -d` nella cartella di config di nvim e poi se si vuole eliminare la cartella `result/`
+
+---
+# Per fare l'update dei plugins:
+- Se si è installato tramite overlay in locale: 
+    1. `nix flake update` nella coartella `.config/nvim`
+    2. rebuild globle del sistema 
+- Se si è aggiunto ad input i un flake:
+    1. `nix flake update` in globale (necessario?)
+    2. rebuild globale del sistema
+
+
+- aaa
+    - aaa
+        - aaa
+            - aaa
+
 
 # aaaa
 ## aaaa
@@ -45,7 +61,6 @@ fn main -> Result<,> {
 #tag1
 #tag1
 [exmp](<README#What this guide covers:>)
-
 
 
 ---

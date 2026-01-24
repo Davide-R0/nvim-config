@@ -24,7 +24,7 @@
 
 -- NOTE: when you change the theme you have to close and restart nvim to reload the trasparency
 
-vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
+vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, { --, "BufEnter"
   pattern = "*",
   desc = "Force transparent background for UI elements",
   callback = function()
@@ -45,6 +45,7 @@ vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
     -- LISTA DEI GRUPPI DA RENDERE TRASPARENTI
     -- Can be fouded with: Telescope hilights
     local groups = {
+      -- TODO: add all the gitsigns of Cul Nr e Ln
       -- === BASE EDITOR ===
       "Normal", "NormalNC",
       --"Comment", "Constant", "Special", "Identifier",
@@ -79,10 +80,64 @@ vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
       "CursorLineSign", "FoldColumn",
       -- Base diff groups
       "DiffAdd", "DiffChange", "DiffDelete", "DiffText",
+
       -- Git signs 
-      "GitSignsAdd", "GitSignsChange", "GitSignsDelete", "GitSignsUntracked", "GitSignsChangedelete", "GitSignsTopdelete",
+      "GitSignsAdd",
+      "GitSignsChange",
+      "GitSignsDelete",
+      "GitSignsUntracked",
+      "GitSignsChangedelete",
+      "GitSignsTopdelete",
+
+      "GitSignsAddNr",
+      "GitSignsChangeNr",
+      "GitSignsDeleteNr",
+      "GitSignsUntrackedNr",
+      "GitSignsChangedeleteNr",
+      "GitSignsTopdeleteNr",
+
+      "GitSignsAddLn",
+      "GitSignsChangeLn",
+      "GitSignsDeleteLn",
+      "GitSignsUntrackedLn",
+      "GitSignsChangedeleteLn",
+      "GitSignsTopdeleteLn",
+
+      "GitSignsAddCul",
+      "GitSignsChangeCul",
+      "GitSignsDeleteCul",
+      "GitSignsUntrackedCul",
+      "GitSignsChangedeleteCul",
+      "GitSignsTopdeleteCul",
+
       -- Git signs staged
-      "GitSignsStagedAdd", "GitSignsStagedChane", "GitSignsStagedDelete", "GitSignsStagedUntracked", "GitSignsStagedChangedelete", "GitSignsStagedTopdelete",
+      "GitSignsStagedAdd",
+      "GitSignsStagedChange",
+      "GitSignsStagedDelete",
+      "GitSignsStagedUntracked",
+      "GitSignsStagedChangedelete",
+      "GitSignsStagedTopdelete",
+
+      "GitSignsStagedAddNr",
+      "GitSignsStagedChangeNr",
+      "GitSignsStagedDeleteNr",
+      "GitSignsStagedUntrackedNr",
+      "GitSignsStagedChangedeleteNr",
+      "GitSignsStagedTopdeleteNr",
+
+      "GitSignsStagedAddLn",
+      "GitSignsStagedChangeLn",
+      "GitSignsStagedDeleteLn",
+      "GitSignsStagedUntrackedLn",
+      "GitSignsStagedChangedeleteLn",
+      "GitSignsStagedTopdeleteLn",
+
+      "GitSignsStagedAddCul",
+      "GitSignsStagedChangeCul",
+      "GitSignsStagedDeleteCul",
+      "GitSignsStagedUntrackedCul",
+      "GitSignsStagedChangedeleteCul",
+      "GitSignsStagedTopdeleteCul",
     }
 
     -- Applica la trasparenza sicura

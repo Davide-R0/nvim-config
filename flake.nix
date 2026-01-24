@@ -260,7 +260,7 @@
         # Markdown
         render-markdown-nvim
         markdown-preview-nvim
-        nvim-treesitter-parsers.markdown_inline
+        obsidian-nvim
 
         # Latex watching
         vimtex
@@ -268,6 +268,7 @@
         # Treesitter
         #pkgs.neovimPlugins.treesitter-textobjects
         nvim-treesitter.withAllGrammars
+        nvim-treesitter-parsers.markdown_inline
         #(nvim-treesitter.withPlugins (plugins: with plugins; [
         #  pkgs.vimPlugins.nvim-treesitter-parsers.bash
         #  pkgs.vimPlugins.nvim-treesitter-parsers.c
@@ -287,6 +288,9 @@
         #  pkgs.vimPlugins.nvim-treesitter-parsers.vim
         #  pkgs.vimPlugins.nvim-treesitter-parsers.vimdoc
         #  pkgs.vimPlugins.nvim-treesitter-parsers.yaml
+        #  pkgs.vimPlugins.nvim-treesitter-parsers.nix
+        #  pkgs.vimPlugins.nvim-treesitter-parsers.markdown
+        #  pkgs.vimPlugins.nvim-treesitter-parsers.markdown_inline
         #  # Aggiungi qui altri parser di cui hai bisogno
         #]))
 

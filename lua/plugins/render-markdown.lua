@@ -1,8 +1,6 @@
 return {
   'MeanderingProgrammer/render-markdown.nvim',
 
-  enable = false,
-
   dependencies = { 'nvim-tree/nvim-web-devicons', name = 'nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
   -- Le tue impostazioni vanno qui dentro 'opts'
@@ -12,7 +10,7 @@ return {
         enabled = true,
         sign = true,
         position = 'overlay',
-        icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+        icons = { '󱘹 ', '󱘹󱘹 ', '󱘹󱘹󱘹 ', '󱘹󱘹󱘹󱘹 ', '󱘹󱘹󱘹󱘹󱘹 ', '󱘹󱘹󱘹󱘹󱘹󱘹 ' }, --' ', ' ', ' ', ' ', ' ', ' ', }, -- '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
         signs = { '󰫎 ' },
         width = 'full',
         left_margin = 0,
@@ -77,7 +75,7 @@ return {
     -- Bullet lists
     bullet = {
         enabled = true,
-        icons = { '●', '○', '◆', '◇' },
+        icons = { ' ', ' ', ' ', ' ' }, --{ '●', '○', '◆', '◇' }
         ordered_icons = function(ctx)
             local value = vim.trim(ctx.value)
             local index = tonumber(value:sub(1, #value - 1))
@@ -129,33 +127,33 @@ return {
 
     -- Callouts
     callout = {
-        note =      { raw = '[!NOTE]',      rendered = '󰋽 Note',        highlight = 'RenderMarkdownInfo' },
-        tip =       { raw = '[!TIP]',       rendered = '󰌶 Tip',         highlight = 'RenderMarkdownSuccess' },
-        important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important',   highlight = 'RenderMarkdownHint' },
-        warning =   { raw = '[!WARNING]',   rendered = '󰀪 Warning',      highlight = 'RenderMarkdownWarn' },
-        caution =   { raw = '[!CAUTION]',   rendered = '󰳦 Caution',      highlight = 'RenderMarkdownError' },
-        abstract =  { raw = '[!ABSTRACT]',  rendered = '󰨸 Abstract',    highlight = 'RenderMarkdownInfo' },
-        summary =   { raw = '[!SUMMARY]',   rendered = '󰨸 Summary',      highlight = 'RenderMarkdownInfo' },
-        tldr =      { raw = '[!TLDR]',      rendered = '󰨸 Tldr',        highlight = 'RenderMarkdownInfo' },
-        info =      { raw = '[!INFO]',      rendered = '󰋽 Info',        highlight = 'RenderMarkdownInfo' },
-        todo =      { raw = '[!TODO]',      rendered = '󰗡 Todo',        highlight = 'RenderMarkdownInfo' },
-        hint =      { raw = '[!HINT]',      rendered = '󰌶 Hint',        highlight = 'RenderMarkdownSuccess' },
-        success =   { raw = '[!SUCCESS]',   rendered = '󰄬 Success',     highlight = 'RenderMarkdownSuccess' },
-        check =     { raw = '[!CHECK]',     rendered = '󰄬 Check',        highlight = 'RenderMarkdownSuccess' },
-        done =      { raw = '[!DONE]',      rendered = '󰄬 Done',         highlight = 'RenderMarkdownSuccess' },
-        question =  { raw = '[!QUESTION]',  rendered = '󰘥 Question',    highlight = 'RenderMarkdownWarn' },
-        help =      { raw = '[!HELP]',      rendered = '󰘥 Help',        highlight = 'RenderMarkdownWarn' },
-        faq =       { raw = '[!FAQ]',       rendered = '󰘥 Faq',         highlight = 'RenderMarkdownWarn' },
-        attention = { raw = '[!ATTENTION]', rendered = '󰀪 Attention',   highlight = 'RenderMarkdownWarn' },
-        failure =   { raw = '[!FAILURE]',   rendered = '󰅖 Failure',      highlight = 'RenderMarkdownError' },
-        fail =      { raw = '[!FAIL]',      rendered = '󰅖 Fail',        highlight = 'RenderMarkdownError' },
-        missing =   { raw = '[!MISSING]',   rendered = '󰅖 Missing',      highlight = 'RenderMarkdownError' },
-        danger =    { raw = '[!DANGER]',    rendered = '󱐌 Danger',      highlight = 'RenderMarkdownError' },
-        error =     { raw = '[!ERROR]',     rendered = '󱐌 Error',        highlight = 'RenderMarkdownError' },
-        bug =       { raw = '[!BUG]',       rendered = '󰨰 Bug',          highlight = 'RenderMarkdownError' },
-        example =   { raw = '[!EXAMPLE]',   rendered = '󰉹 Example',      highlight = 'RenderMarkdownHint' },
-        quote =     { raw = '[!QUOTE]',     rendered = '󱆨 Quote',        highlight = 'RenderMarkdownQuote' },
-        cite =      { raw = '[!CITE]',      rendered = '󱆨 Cite',         highlight = 'RenderMarkdownQuote' },
+        --note =      { raw = '[!NOTE]',      rendered = '󰋽 Note',        highlight = 'RenderMarkdownInfo' },
+        --tip =       { raw = '[!TIP]',       rendered = '󰌶 Tip',         highlight = 'RenderMarkdownSuccess' },
+        --important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important',   highlight = 'RenderMarkdownHint' },
+        --warning =   { raw = '[!WARNING]',   rendered = '󰀪 Warning',      highlight = 'RenderMarkdownWarn' },
+        --caution =   { raw = '[!CAUTION]',   rendered = '󰳦 Caution',      highlight = 'RenderMarkdownError' },
+        --abstract =  { raw = '[!ABSTRACT]',  rendered = '󰨸 Abstract',    highlight = 'RenderMarkdownInfo' },
+        --summary =   { raw = '[!SUMMARY]',   rendered = '󰨸 Summary',      highlight = 'RenderMarkdownInfo' },
+        --tldr =      { raw = '[!TLDR]',      rendered = '󰨸 Tldr',        highlight = 'RenderMarkdownInfo' },
+        --info =      { raw = '[!INFO]',      rendered = '󰋽 Info',        highlight = 'RenderMarkdownInfo' },
+        --todo =      { raw = '[!TODO]',      rendered = '󰗡 Todo',        highlight = 'RenderMarkdownInfo' },
+        --hint =      { raw = '[!HINT]',      rendered = '󰌶 Hint',        highlight = 'RenderMarkdownSuccess' },
+        --success =   { raw = '[!SUCCESS]',   rendered = '󰄬 Success',     highlight = 'RenderMarkdownSuccess' },
+        --check =     { raw = '[!CHECK]',     rendered = '󰄬 Check',        highlight = 'RenderMarkdownSuccess' },
+        --done =      { raw = '[!DONE]',      rendered = '󰄬 Done',         highlight = 'RenderMarkdownSuccess' },
+        --question =  { raw = '[!QUESTION]',  rendered = '󰘥 Question',    highlight = 'RenderMarkdownWarn' },
+        --help =      { raw = '[!HELP]',      rendered = '󰘥 Help',        highlight = 'RenderMarkdownWarn' },
+        --faq =       { raw = '[!FAQ]',       rendered = '󰘥 Faq',         highlight = 'RenderMarkdownWarn' },
+        --attention = { raw = '[!ATTENTION]', rendered = '󰀪 Attention',   highlight = 'RenderMarkdownWarn' },
+        --failure =   { raw = '[!FAILURE]',   rendered = '󰅖 Failure',      highlight = 'RenderMarkdownError' },
+        --fail =      { raw = '[!FAIL]',      rendered = '󰅖 Fail',        highlight = 'RenderMarkdownError' },
+        --missing =   { raw = '[!MISSING]',   rendered = '󰅖 Missing',      highlight = 'RenderMarkdownError' },
+        --danger =    { raw = '[!DANGER]',    rendered = '󱐌 Danger',      highlight = 'RenderMarkdownError' },
+        --error =     { raw = '[!ERROR]',     rendered = '󱐌 Error',        highlight = 'RenderMarkdownError' },
+        --bug =       { raw = '[!BUG]',       rendered = '󰨰 Bug',          highlight = 'RenderMarkdownError' },
+        --example =   { raw = '[!EXAMPLE]',   rendered = '󰉹 Example',      highlight = 'RenderMarkdownHint' },
+        --quote =     { raw = '[!QUOTE]',     rendered = '󱆨 Quote',        highlight = 'RenderMarkdownQuote' },
+        --cite =      { raw = '[!CITE]',      rendered = '󱆨 Cite',         highlight = 'RenderMarkdownQuote' },
     },
 
     -- Links
@@ -197,48 +195,48 @@ return {
     },
   },
 
-  -- AGGIUNGI QUESTA PARTE
-  config = function(_, opts)
-    require('render-markdown').setup(opts)
-    -- Funzione per applicare gli highlight con sfondo
-    local function set_backgrounds()
-      -- Per i blocchi di codice multiriga, linkiamo lo sfondo a 'Visual'.
-      -- 'Visual' ha quasi sempre uno sfondo definito nel tema per le selezioni.
-      --local pmenu_hl = vim.api.nvim_get_hl(0, { name = 'Comment', link = false })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = pmenu_hl.fg })
-
-      -- Per il codice inline (`code`), usiamo lo stesso sfondo.
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { bg = pmenu_hl.fg })
-
-      -- Prendiamo la definizione di un highlight group che ha uno sfondo (es. Pmenu)
-      --local pmenu_hl = vim.api.nvim_get_hl(0, { name = 'Pmenu', link = false })
-
-      --if not pmenu_hl or not pmenu_hl.bg then
-      --  -- Fallback se non riusciamo a trovare un colore di sfondo
-      --  pmenu_hl = { bg = '#999999' }
-      --end
-
-      -- Applichiamo SOLO lo sfondo ai nostri gruppi, lasciando il testo (fg) intatto
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = vim.api.nvim_get_hl(0, { name = 'Comment', link = false }).fg })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { bg =  })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', { bg = vim.api.nvim_get_hl(0, { name = 'Delimiter', link = false }).\ })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH2Bg', { bg = '#a8e086' })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH3Bg', { bg = '#8e7638' })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', { bg = '#fecc8b' })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', { bg = '#ab6a3d' })
-      --vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', { bg = '#ab6a3d' })
-
-      -- TODO: Aggiungere anche gli altri??
-    end
-
-    -- Applica gli sfondi quando il tema cambia o all'avvio
-    vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
-      pattern = '*',
-      callback = set_backgrounds,
-    })
-
-    -- Esegui subito la prima volta
-    set_backgrounds()
-  end,
+--  -- AGGIUNGI QUESTA PARTE per modificare i colori di default
+--  config = function(_, opts)
+--    require('render-markdown').setup(opts)
+--    -- Funzione per applicare gli highlight con sfondo
+--    local function set_backgrounds()
+--      -- Per i blocchi di codice multiriga, linkiamo lo sfondo a 'Visual'.
+--      -- 'Visual' ha quasi sempre uno sfondo definito nel tema per le selezioni.
+--      --local pmenu_hl = vim.api.nvim_get_hl(0, { name = 'Comment', link = false })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = pmenu_hl.fg })
+--
+--      -- Per il codice inline (`code`), usiamo lo stesso sfondo.
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { bg = pmenu_hl.fg })
+--
+--      -- Prendiamo la definizione di un highlight group che ha uno sfondo (es. Pmenu)
+--      --local pmenu_hl = vim.api.nvim_get_hl(0, { name = 'Pmenu', link = false })
+--
+--      --if not pmenu_hl or not pmenu_hl.bg then
+--      --  -- Fallback se non riusciamo a trovare un colore di sfondo
+--      --  pmenu_hl = { bg = '#999999' }
+--      --end
+--
+--      -- Applichiamo SOLO lo sfondo ai nostri gruppi, lasciando il testo (fg) intatto
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = vim.api.nvim_get_hl(0, { name = 'Comment', link = false }).fg })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { bg =  })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', { bg = vim.api.nvim_get_hl(0, { name = 'Delimiter', link = false }).\ })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH2Bg', { bg = '#a8e086' })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH3Bg', { bg = '#8e7638' })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', { bg = '#fecc8b' })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', { bg = '#ab6a3d' })
+--      --vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', { bg = '#ab6a3d' })
+--
+--      -- TODO: Aggiungere anche gli altri??
+--    end
+--
+--    -- Applica gli sfondi quando il tema cambia o all'avvio
+--    vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
+--      pattern = '*',
+--      callback = set_backgrounds,
+--    })
+--
+--    -- Esegui subito la prima volta
+--    set_backgrounds()
+--  end,
 
 }

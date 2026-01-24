@@ -13,8 +13,6 @@ require("config.options")
 -- 3. Imposta se abbiamo una Nerd Font (usando nixCats)
 vim.g.have_nerd_font = nixCats('have_nerd_font')
 
-require("config.trasparency")
-
 -- Funzione per gestire il percorso del lockfile con nixCats
 local function getlockfilepath()
   if require('nixCatsUtils').isNixCats and nixCats.settings and type(nixCats.settings.unwrappedCfgPath) == 'string' then
@@ -78,3 +76,4 @@ require('nixCatsUtils.lazyCat').setup(
   lazyOptions
 )
 
+require("config.trasparency")
