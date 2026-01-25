@@ -103,7 +103,6 @@
     lspsAndRuntimeDeps = with pkgs; {
       general = [
         tree-sitter
-        #tree-sitter-grammars.tree-sitter-markdown-inline
         
         # manual for nix options
         manix
