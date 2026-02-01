@@ -31,7 +31,7 @@ return {
       html = { enabled = false },
       css = { enabled = false },
     },
-    
+
     max_width = nil,
     max_height = nil,
     max_width_window_percentage = nil,

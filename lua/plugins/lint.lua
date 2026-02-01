@@ -8,16 +8,8 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
 
     config = function()
-      local lint = require 'lint'
+      local lint = require('lint')
       lint.linters_by_ft = {
-        -- Vale lint: `.vale.ini` (da aggiugnere nel root del progetto):
-        -- --
-        -- StylesPath = styles
-        -- MinAlertLevel = suggestion
-        -- [*.{md,txt}]
-        -- BasedOnStyles = Vale
-        -- # Qui potresti aggiungere stili specifici per l'italiano se ne scarichi
-        -- --
         markdown = { 'markdownlint' }, -- Also grammar checking
         sh = { 'shellcheck' },
         bash = { 'shellcheck' },
@@ -67,7 +59,7 @@ return {
       -- Prendiamo la definizione base di selene
       local selene = lint.linters.selene
       -- Definiamo un percorso per una config globale (es. nella tua cache o config dir)
-      local global_selene_conf = vim.fn.stdpath("config") .. "/selene.toml"
+      local global_selene_conf = vim.fn.stdpath("config") .. "/spell/selene.toml"
       -- Creiamo il file se non esiste (così non devi gestirlo manualmente)
       if vim.fn.filereadable(global_selene_conf) == 0 then
         local f = io.open(global_selene_conf, "w")

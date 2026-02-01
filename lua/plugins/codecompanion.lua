@@ -5,7 +5,7 @@ return {
 
   config = function()
     local function get_gemini_key()
-      local env_file = vim.fn.expand("~/.config/nvim/.env") -- Cambia il percorso se serve
+      local env_file = vim.fn.expand("~/.zz_system/config/nvim/.env") -- TODO: mettere il path di config di nvim
       if vim.fn.filereadable(env_file) == 1 then
         for line in io.lines(env_file) do
           local key, value = line:match("([^=]+)=(.+)")
@@ -14,6 +14,7 @@ return {
           end
         end
       end
+      vim.notify("CodeCompanion: GEMINI_API_KEY non trovata in " .. env_file, vim.log.levels.WARN)
       return ""
     end
 
@@ -52,7 +53,7 @@ return {
             },
             schema = {
               model = {
-                default = "gemini-1.5-flash",
+                default = "gemini-2.0-flash",
               },
             },
           })

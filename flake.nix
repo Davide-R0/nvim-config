@@ -231,7 +231,7 @@
         # --- Latex ---
         #chktex   # Dovrebbe essere già dentro il pachcetto texlive
         # --- Altri utili ---
-        harper # linter per la lingua in rust
+        #harper # linter per la lingua in rust (non in italiano)
         #ltex-ls # Linter per la lingua
 
         #vale                   # Linter per la prosa (inglese) molto potente
