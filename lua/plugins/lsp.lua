@@ -106,20 +106,32 @@ return {
     "nixd",
     ft = { "nix" },
     lsp = {
-
       root_markers = { "flake.nix", ".git" },
       settings = {
         nixd = {
-          nixpkgs = {
-            --expr = [[import <nixpkgs> {}]],
-            --expr = "import <nixpkgs> { }",
-            expr = 'import (builtins.getFlake "' .. vim.fn.getcwd() .. '").inputs.nixpkgs { }',
-          },
+          --nixpkgs = {
+          --  --expr = [[import <nixpkgs> {}]],
+          --  --expr = "import <nixpkgs> { }",
+          --  expr = 'import (builtins.getFlake "' .. vim.fn.getcwd() .. '").inputs.nixpkgs { }',
+          --},
           formatting = { command = { "nixfmt" } }
         },
         options = {
         },
-      }
+      },
+      on_init = function(client)
+        local root = client.root_dir or vim.fn.getcwd()
+        client.settings = vim.tbl_deep_extend('force', client.settings, {
+          nixd = {
+            nixpkgs = {
+              expr = 'import (builtins.getFlake "' .. root .. '").inputs.nixpkgs { }',
+            },
+          },
+        })
+        client.notify("workspace/didChangeConfiguration", {
+          settings = client.settings,
+        })
+      end,
     }
   },
 
