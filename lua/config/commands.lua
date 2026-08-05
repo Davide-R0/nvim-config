@@ -450,3 +450,6 @@ end, { desc = "Compila in SVG, avvia imv con sfondo bianco e attiva l'autocompil
 
 vim.api.nvim_create_user_command("PumlImvStop", stop_preview,
   { desc = "Sgancia i listener di salvataggio e chiude l'istanza imv associata" })
+
+-- build123d
+require('config.ocp_preview').setup()
